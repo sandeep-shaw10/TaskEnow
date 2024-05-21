@@ -1,7 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import Logo from '../assets/images/logo.png'
+import { RxHamburgerMenu } from "react-icons/rx";
+
 
 const Menu = () => {
+
+  const navLink = {
+    paddingLeft: 0,
+    paddingRight: `20px`
+  }
 
   const [services, setServices] = useState([])
 
@@ -24,39 +37,39 @@ const Menu = () => {
       });
   }, [])
 
-  // Pages and Service
-  const menuItems = [
-    { label: 'Home', url: '/' },
-    { label: 'About Us', url: '/about' },
-    { label: 'Services', url: '/services' },
-    { label: 'Became a technician', url: '/become-technician' },
-    { label: 'Contact Us', url: '/contact' },
-    { label: 'Book Now', url: '/book-now', className: 'btn' }
-  ];
 
   return (
-    <nav className="nav-menu">
-      <ul>
-        {menuItems.map((menuItem, index) => (
-          <li key={index}>
-            <Link to={menuItem.url} className={menuItem.className}>{menuItem.label}</Link>
-            {menuItem.label === 'Services' && services.length != 0 && (
-              <>
-                <span className="subarrow fa fa-caret-down"></span>
-                <ul className="sub-menu">
-                  {services.map((subMenuItem, subIndex) => (
-                    <li key={subIndex}>
-                      <Link to={subMenuItem.url}>{subMenuItem.label}</Link>
-                    </li>
-                  ))}
-                </ul>
-              </>
-            )}
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <Navbar expand="lg" style={{ backgroundColor: '#121216', padding: '10px 0px' }}>
+      <Container >
+        <Navbar.Brand as={Link} to='/'>
+            <img src={Logo} alt="logo"/>
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav">
+          <RxHamburgerMenu color="#fff"/>
+        </Navbar.Toggle>
+        <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+          <Nav>
+            <Nav.Link as={Link} to='/' style={navLink}>Home</Nav.Link>
+            <Nav.Link as={Link} to='/about-us' style={navLink}>About Us</Nav.Link>
+            <NavDropdown style={navLink} title={
+                <span className="text-white my-auto">Services</span>
+              }
+            >
+              {
+                services.map(({label, url}, index) => {
+                  return <NavDropdown.Item as={Link} to={`/${url}`} key={index}>{label}</NavDropdown.Item>
+                })
+              }
+            </NavDropdown>
+            <Nav.Link style={navLink} as={Link} to='/become-technician'>Became A Technician</Nav.Link>
+            <Nav.Link style={navLink} as={Link} to='/contact-us'>Contact Us</Nav.Link>
+          </Nav>
+          <Button className='btn-danger' as={Link} to='/book-now'>Book Now</Button>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 };
+
 
 export default Menu;

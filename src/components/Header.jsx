@@ -1,47 +1,64 @@
 import Menu from './Menu';
-import Logo from '../assets/images/logo.png'
 import { Link } from 'react-router-dom';
+import Container from 'react-bootstrap/Container';
+import { IoMdMail } from "react-icons/io";
+import { FaPhoneAlt } from "react-icons/fa";
 
 
 const Header = () => {
+
+    const info = {
+        display: `flex`,
+        flexDirection: `row`,
+        flexWrap: `wrap`,
+    }
+
+    const infoDetail = {
+        padding: '5px 20px',
+        display:'flex',
+        flexDirection:'row',
+        alignItems: `center`
+    }
+
+    const infoDetailData = {
+        padding: '0px 5px'
+    }
+
+    const siteLink = {
+        textDecoration: 'none', 
+        color: '#fff'
+    }
+
   return (
-    <header className="site-header">
-      <div className="top-header">
-				<div className="container">
-                    <ul className="top-link">
-                        <li className="account" id="my_account">
-                            <Link to='javascript:void(0)' onClick={() => window.location = `mailto:${process.env.REACT_APP_EMAIL}`}  title="my account"> 
-                                <span className="fa fa-envelope"></span>
+    <header className='site-header'>
+        <div className='top-header' >
+            <Container>
+                <div style={info}>
+                    <div style={infoDetail}>
+                        <IoMdMail size={20} />
+                        <a style={siteLink} href={`mailto:${process.env.REACT_APP_EMAIL}`} title="site email"> 
+                            <div style={infoDetailData}>
                                 {process.env.REACT_APP_EMAIL}
-                            </Link>
-                        </li>
-                        <li className="account" id="my_account">
-                            <Link to='javascript:void(0)' onClick={() => window.location = `tel:${process.env.REACT_APP_PHONE}`}  title="my account"> 
-                                <span className="fa fa-envelope"></span>
-                                {process.env.REACT_APP_PHONE}
-                            </Link>
-                        </li> 
-                    </ul>
-                </div>
-            </div>
-            <div className="bottom-header">
-				<div className="container">
-                    <div className="row">
-                        <div className="col-sm-3">
-                            <div className="logo">
-                                <Link to='/'>
-                                    <img src={Logo} alt="logo"/>
-                                </Link>
                             </div>
-                        </div>
-                        <div className="col-sm-9">
-                            <Menu />
-                        </div>
+                        </a>
+                    </div>
+                    <div style={infoDetail}>
+                        <FaPhoneAlt size={15} />
+                        <a style={siteLink} href={`tel:${process.env.REACT_APP_PHONE}`} title="site number">
+                            <div style={infoDetailData}>
+                                {process.env.REACT_APP_PHONE}
+                            </div>
+                        </a>
                     </div>
                 </div>
-            </div>
+            </Container>
+        </div>
+        <div className='bottom-header' >
+            <Menu/>
+        </div>
     </header>
   );
 };
+
 
 export default Header;
